@@ -8,11 +8,6 @@ const zipcodeHandler = nc()
     res.statusCode = 200
     res.end(JSON.stringify({zipcode: req.query.zipcode}))
   })
-  .post((req, res) => {
-    // put zipcode data into a database
-    res.statusCode = 201;
-    res.end(JSON.stringify({'message': 'Your entry was saved.'}))
-  })
   .put((req, res) => {
     // technically would be used to update zipcode if more data has been entered
 
