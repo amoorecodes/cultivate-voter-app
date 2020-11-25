@@ -1,19 +1,30 @@
-import nc from 'next-connect'
-import votesByZipcode from '../../../src/data/votesByZipcode'
+import nc from "next-connect";
+import votesByZipcode from "../../../src/data/votesByZipcode";
+import { lookup } from "zipcodes";
+
 const getAllVotes = nc()
-  .get((req,res) => {
+  .get((req, res) => {
     // retrieves list of all votes
     res.statusCode = 200;
-    res.end(JSON.stringify(votesByZipcode))
+    res.end(JSON.stringify(votesByZipcode));
   })
   .post((req, res) => {
     // put zipcode data into a database
 
-    const {zipcode, votes} = req.body
+    // get values from request
+    const { zipcode, votes } = req.body;
+
+    // validate zipcode
+    if (!lookup(zipcode)) {
+      res.statusCode = 500;
+      res.end("This is not a valid zipcode");
+      return;
+    }
+
     // will override the previous entry
     votesByZipcode[zipcode] = votes;
     res.statusCode = 201;
-    res.end(JSON.stringify({'message': 'Your entry was saved.'}))
-  })
+    res.end(JSON.stringify({ message: "Your entry was saved." }));
+  });
 
-  export default getAllVotes;
+export default getAllVotes;

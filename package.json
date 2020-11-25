@@ -227,7 +227,8 @@
     "ret": "^0.1.15",
     "rework-visit": "^1.0.0",
     "run-queue": "^1.0.3",
-    "safe-buffer": "^5.2.1"
+    "safe-buffer": "^5.2.1",
+    "zipcodes": "^8.0.0"
   },
   "devDependencies": {},
   "scripts": {
