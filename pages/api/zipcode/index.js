@@ -1,8 +1,10 @@
 import nc from "next-connect";
 import votesByZipcode from "../../../src/data/votesByZipcode";
+import cors from "cors";
 import { lookup } from "zipcodes";
 
 const getAllVotes = nc()
+  .use(cors())
   .get((req, res) => {
     // retrieves list of all votes
     res.statusCode = 200;
@@ -12,7 +14,7 @@ const getAllVotes = nc()
     // put zipcode data into a database
 
     // get values from request
-    const { zipcode, votes } = req.body;
+    const { zipcode, count } = req.body;
 
     // validate zipcode
     if (!lookup(zipcode)) {
@@ -22,7 +24,7 @@ const getAllVotes = nc()
     }
 
     // will override the previous entry
-    votesByZipcode[zipcode] = votes;
+    votesByZipcode[zipcode] = parseInt(count);
     res.statusCode = 201;
     res.end(JSON.stringify({ message: "Your entry was saved." }));
   });
